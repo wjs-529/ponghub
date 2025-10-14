@@ -3,28 +3,11 @@ package configure
 type (
 	// NotificationConfig defines the configuration for all notification channels
 	NotificationConfig struct {
-		Enabled  bool            `yaml:"enabled,omitempty"`
-		Methods  []string        `yaml:"methods,omitempty"`
-		Default  *DefaultConfig  `yaml:"default,omitempty"`
-		Discord  *DiscordConfig  `yaml:"discord,omitempty"`
-		Email    *EmailConfig    `yaml:"email,omitempty"`
-		Slack    *SlackConfig    `yaml:"slack,omitempty"`
-		Telegram *TelegramConfig `yaml:"telegram,omitempty"`
-		WeChat   *WeChatConfig   `yaml:"wechat,omitempty"`
-		Webhook  *WebhookConfig  `yaml:"webhook,omitempty"`
-	}
-
-	// DiscordConfig defines Discord webhook notification settings
-	DiscordConfig struct {
-		WebhookURL string   `yaml:"webhook_url,omitempty"`
-		Username   string   `yaml:"username,omitempty"`
-		AvatarURL  string   `yaml:"avatar_url,omitempty"`
-		UseEmbeds  bool     `yaml:"use_embeds,omitempty"`
-		Color      int      `yaml:"color,omitempty"`
-		Mentions   []string `yaml:"mentions,omitempty"`
-		Retries    int      `yaml:"retries,omitempty"`
-		Timeout    int      `yaml:"timeout,omitempty"`
-		UserAgent  string   `yaml:"user_agent,omitempty"`
+		Enabled bool           `yaml:"enabled,omitempty"`
+		Methods []string       `yaml:"methods,omitempty"`
+		Default *DefaultConfig `yaml:"default,omitempty"`
+		Email   *EmailConfig   `yaml:"email,omitempty"`
+		Webhook *WebhookConfig `yaml:"webhook,omitempty"`
 	}
 
 	// EmailConfig defines SMTP email notification settings
@@ -37,44 +20,6 @@ type (
 		UseTLS      bool     `yaml:"use_tls,omitempty"`
 		UseStartTLS bool     `yaml:"use_starttls,omitempty"`
 		SkipVerify  bool     `yaml:"skip_verify,omitempty"`
-	}
-
-	// SlackConfig defines Slack webhook notification settings
-	SlackConfig struct {
-		WebhookURL string   `yaml:"webhook_url,omitempty"`
-		Channel    string   `yaml:"channel,omitempty"`
-		Username   string   `yaml:"username,omitempty"`
-		IconEmoji  string   `yaml:"icon_emoji,omitempty"`
-		IconURL    string   `yaml:"icon_url,omitempty"`
-		UseBlocks  bool     `yaml:"use_blocks,omitempty"`
-		Color      string   `yaml:"color,omitempty"`
-		Mentions   []string `yaml:"mentions,omitempty"`
-		Retries    int      `yaml:"retries,omitempty"`
-		Timeout    int      `yaml:"timeout,omitempty"`
-		UserAgent  string   `yaml:"user_agent,omitempty"`
-	}
-
-	// TelegramConfig defines Telegram bot notification settings
-	TelegramConfig struct {
-		BotToken              string `yaml:"bot_token,omitempty"`
-		ChatID                string `yaml:"chat_id,omitempty"`
-		ParseMode             string `yaml:"parse_mode,omitempty"`
-		DisableWebPagePreview bool   `yaml:"disable_web_page_preview,omitempty"`
-		DisableNotification   bool   `yaml:"disable_notification,omitempty"`
-		ReplyToMessageID      int    `yaml:"reply_to_message_id,omitempty"`
-		Retries               int    `yaml:"retries,omitempty"`
-		Timeout               int    `yaml:"timeout,omitempty"`
-		UserAgent             string `yaml:"user_agent,omitempty"`
-	}
-
-	// WeChatConfig defines WeChat Work webhook notification settings
-	WeChatConfig struct {
-		WebhookURL string   `yaml:"webhook_url,omitempty"`
-		MsgType    string   `yaml:"msg_type,omitempty"`
-		Mentions   []string `yaml:"mentions,omitempty"`
-		Retries    int      `yaml:"retries,omitempty"`
-		Timeout    int      `yaml:"timeout,omitempty"`
-		UserAgent  string   `yaml:"user_agent,omitempty"`
 	}
 
 	// CustomPayloadConfig defines custom payload configuration for webhooks

@@ -63,22 +63,6 @@ func NewNotificationManager(config *configure.NotificationConfig) *NotificationM
 			if config.Email != nil {
 				manager.services = append(manager.services, channels.NewEmailNotifier(config.Email))
 			}
-		case "discord":
-			if config.Discord != nil {
-				manager.services = append(manager.services, channels.NewDiscordNotifier(config.Discord))
-			}
-		case "slack":
-			if config.Slack != nil {
-				manager.services = append(manager.services, channels.NewSlackNotifier(config.Slack))
-			}
-		case "telegram":
-			if config.Telegram != nil {
-				manager.services = append(manager.services, channels.NewTelegramNotifier(config.Telegram))
-			}
-		case "wechat":
-			if config.WeChat != nil {
-				manager.services = append(manager.services, channels.NewWeChatNotifier(config.WeChat))
-			}
 		case "webhook":
 			if config.Webhook != nil {
 				manager.services = append(manager.services, channels.NewWebhookNotifier(config.Webhook))

@@ -269,10 +269,6 @@ PongHub 支持以下通知方式：
 
 - **默认通知** - 通过GitHub Actions工作流失败进行通知
 - **邮件通知** - 通过SMTP发送邮件，支持高级安全选项
-- **Discord** - 通过Webhook发送到Discord频道，支持丰富嵌入消息
-- **Slack** - 通过Webhook发送到Slack频道，支持Block Kit格式
-- **Telegram** - 通过Bot API发送消息，支持高级格式化
-- **企业微信** - 通过企业微信群机器人发送消息，支持多种消息类型
 - **自定义Webhook** - 发送到任意HTTP端点，支持高级配置
 
 使用时，在 `config.yaml` 文件中添加 `notifications` 配置块：
@@ -282,10 +278,6 @@ notifications:
   enabled: true  # 启用通知功能
   methods:       # 要启用的通知方式
     - email
-    - discord
-    - slack
-    - telegram
-    - wechat
     - webhook
   
   # 各种通知方式的具体配置...
@@ -326,89 +318,6 @@ email:
 
 - `SMTP_USERNAME` - SMTP用户名
 - `SMTP_PASSWORD` - SMTP密码
-
-#### 💬 Discord 配置
-
-```yaml
-discord:
-  webhook_url: "https://discord.com/api/webhooks/your_webhook_id/your_webhook_token"  # 留空则从环境变量读取
-  username: "PongHub Bot"           # 发送消息的用户名（可选）
-  avatar_url: ""                    # 发送消息的头像URL（可选）
-  timeout: 30                       # 请求超时时间，单位秒（可选）
-  retries: 3                        # 重试次数（可选）
-  color: 15158332                   # 嵌入消息颜色，十进制格式（可选）
-  use_embeds: true                  # 使用丰富嵌入消息而非纯文本（可选）
-  mentions:                         # 要@的用户/角色ID（可选）
-    - "123456789012345678"
-  headers:                          # 自定义请求头（可选）
-    User-Agent: "PongHub-Bot/1.0"
-```
-
-所需环境变量：
-
-- `DISCORD_WEBHOOK_URL` - Discord Webhook URL
-
-#### 💬 Slack 配置
-
-```yaml
-slack:
-  webhook_url: "https://hooks.slack.com/services/your/webhook/url"  # 留空则从环境变量读取
-  channel: "#alerts"                # 发送消息的频道（可选）
-  username: "PongHub Bot"           # 发送消息的用户名（可选）
-  icon_emoji: ":robot_face:"        # 消息图标表情（可选）
-  icon_url: ""                      # 自定义图标URL（可选）
-  timeout: 30                       # 请求超时时间，单位秒（可选）
-  retries: 3                        # 重试次数（可选）
-  color: "danger"                   # 消息颜色：good, warning, danger 或十六进制（可选）
-  use_blocks: true                  # 使用Block Kit格式（可选）
-  thread_ts: ""                     # 回复到指定线程时间戳（可选）
-  headers:                          # 自定义请求头（可选）
-    User-Agent: "PongHub-Bot/1.0"
-```
-
-所需环境变量：
-
-- `SLACK_WEBHOOK_URL` - Slack Webhook URL
-
-#### 💬 Telegram 配置
-
-```yaml
-telegram:
-  bot_token: "your_bot_token"                 # 留空则从环境变量读取
-  chat_id: "your_chat_id"                     # 留空则从环境变量读取
-  parse_mode: "HTML"                          # HTML, Markdown, MarkdownV2（可选）
-  disable_web_page_preview: true              # 禁用网页预览（可选）
-  disable_notification: false                 # 静默发送（可选）
-  timeout: 30                                 # 请求超时时间，单位秒（可选）
-  retries: 3                                  # 重试次数（可选）
-  thread_id: ""                               # 话题消息线程ID（可选）
-  reply_to_message_id: ""                     # 回复到特定消息（可选）
-```
-
-所需环境变量：
-
-- `TELEGRAM_BOT_TOKEN` - Telegram 机器人 Token
-- `TELEGRAM_CHAT_ID` - Telegram 聊天 ID
-
-#### 💬 企业微信配置
-
-```yaml
-wechat:
-  webhook_url: "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=your_key"  # 留空则从环境变量读取
-  msg_type: "text"                      # 消息类型：text, markdown, image, news（可选）
-  timeout: 30                           # 请求超时时间，单位秒（可选）
-  retries: 3                            # 重试次数（可选）
-  mentioned_list:                       # 要@的用户ID（可选）
-    - "@all"
-  mentioned_mobile:                     # 要@的手机号（可选）
-    - "13800138000"
-  headers:                              # 自定义请求头（可选）
-    User-Agent: "PongHub-Bot/1.0"
-```
-
-所需环境变量：
-
-- `WECHAT_WEBHOOK_URL` - 企业微信群机器人 Webhook URL
 
 #### 🔗 自定义Webhook配置
 
@@ -494,8 +403,7 @@ notifications:
   enabled: true
   methods:
     - email
-    - discord
-    - slack
+    - webhook
   
   email:
     smtp_host: "smtp.gmail.com"
@@ -507,18 +415,6 @@ notifications:
     subject: "🚨 PongHub 服务告警"
     use_starttls: true
     is_html: true
-  
-  discord:
-    username: "PongHub 监控"
-    use_embeds: true
-    color: 15158332
-  
-  slack:
-    channel: "#alerts"
-    username: "PongHub Bot"
-    icon_emoji: ":warning:"
-    use_blocks: true
-    color: "danger"
 ```
 
 ## 本地开发

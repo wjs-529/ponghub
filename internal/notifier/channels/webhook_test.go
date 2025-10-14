@@ -275,10 +275,7 @@ func TestWebhookNotifier_RealWorldScenario(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		receivedContentType = r.Header.Get("Content-Type")
 
-		// Debug: log received headers and body
 		body, _ := io.ReadAll(r.Body)
-		t.Logf("Received Content-Type: %s", receivedContentType)
-		t.Logf("Received body: %s", string(body))
 
 		// Parse the JSON body
 		if err := json.Unmarshal(body, &receivedAlert); err != nil {
@@ -368,9 +365,6 @@ func TestWebhookNotifier_SpecialParametersInCustomPayload(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to send webhook with Special Parameters in custom payload: %v", err)
 	}
-
-	// Debug: print the actual received payload
-	t.Logf("Received payload: %+v", receivedPayload)
 
 	// Verify Special Parameters were resolved in template
 	if _, exists := receivedPayload["request_id"]; !exists {

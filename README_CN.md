@@ -290,8 +290,10 @@ notifications:
 默认通知会在以下情况自动启用：
 
 - 没有配置 `notifications` 字段
-- `notifications.enabled: true` 但没有指定 `methods`
+- `notifications.enabled: true` 但没有指定 `methods` 或仅指定了非email/webhook方法
 - 显式配置 `methods: ["default"]`
+
+如果 `notifications` 配置了 `email` 或 `webhook` 方法，默认通知默认关闭，除非在 `notifications.default.enabled` 中明确启用。
 
 #### 📧 邮件通知
 

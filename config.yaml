@@ -12,3 +12,6 @@ services:
       - url: "https://docker-registry.ch3nyang.top/v2"
         status_code: 401
       - url: "https://2024.ch3nyang.top"
+
+notifications:
+  enabled: false

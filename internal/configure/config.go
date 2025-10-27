@@ -77,4 +77,47 @@ func setDefaultConfigs(cfg *configure.Configure) {
 		default_config.SetDefaultTimeout(&cfg.Services[i].Timeout)
 		default_config.SetDefaultMaxRetryTimes(&cfg.Services[i].MaxRetryTimes)
 	}
+
+	// Set default notification configuration
+	setDefaultNotifications(cfg)
+}
+
+// setDefaultNotifications sets default values for notification configuration
+func setDefaultNotifications(cfg *configure.Configure) {
+	if cfg.Notifications == nil {
+		// If no notifications configured, enable default (GitHub Actions exit 1)
+		cfg.Notifications = &configure.NotificationConfig{
+			Enabled: true,
+			Methods: []string{"default"},
+			Default: &configure.DefaultConfig{Enabled: true},
+		}
+		return
+	}
+
+	// Check if other notification methods are configured
+	hasOtherMethods := false
+	for _, method := range cfg.Notifications.Methods {
+		if method == "email" || method == "webhook" {
+			hasOtherMethods = true
+			break
+		}
+	}
+
+	// If default config is not set, set based on other methods
+	if cfg.Notifications.Default == nil {
+		if hasOtherMethods {
+			// If other methods are configured, disable default by default
+			cfg.Notifications.Default = &configure.DefaultConfig{Enabled: false}
+		} else {
+			// If no other methods, enable default
+			cfg.Notifications.Default = &configure.DefaultConfig{Enabled: true}
+		}
+	}
+
+	// If methods include default, ensure it's enabled
+	for _, method := range cfg.Notifications.Methods {
+		if method == "default" && cfg.Notifications.Default != nil {
+			cfg.Notifications.Default.Enabled = true
+		}
+	}
 }

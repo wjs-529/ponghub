@@ -290,8 +290,10 @@ By default, PongHub will send notifications when GitHub Actions workflows fail.
 Default notification is automatically enabled when:
 
 - No `notifications` field is configured
-- `notifications.enabled: true` but no `methods` specified
+- `notifications.enabled: true` but no `methods` specified or only non-email/webhook methods are specified
 - Explicitly configured `methods: ["default"]`
+
+If `notifications` is configured with `email` or `webhook` methods, default notification is disabled by default unless explicitly enabled in `notifications.default.enabled`.
 
 #### 📧 Email Notification
 
@@ -458,4 +460,3 @@ make test
 ## Disclaimer
 
 [PongHub](https://github.com/WCY-dt/ponghub) is for personal learning and research only. We are not responsible for the usage behavior or results of the program. Please do not use it for commercial purposes or illegal activities.
-

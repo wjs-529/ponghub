@@ -61,19 +61,19 @@ jobs:
 
       - name: "⚠️ Handle Service Notifications"
         run: |
-          if [ -f data/notify.txt ] && [ -s data/notify.txt ]; then
-            echo "Service issues detected:"
-            cat data/notify.txt
-            echo "Service issues have been reported through the configured notification channels."
-            echo "If no notifications were received, please check your notification configuration in config.yaml"
-            if [ "$PONGHUB_HAS_ALERTS" = "true" ]; then
-              echo ""
-              echo "🚨 DEFAULT NOTIFICATION: GitHub Actions failure triggered as notification method"
-              echo "This workflow is failing intentionally to alert you of service issues."
-              echo "To receive notifications through other channels, configure them in config.yaml"
-              echo ""
+          if [ -f data/default_enabled.txt ] && [ -s data/default_enabled.txt ] && [ "$(cat data/default_enabled.txt)" = "true" ]; then
+            if [ -f data/notify.txt ] && [ -s data/notify.txt ]; then
+              echo "Service issues detected:"
+              cat data/notify.txt
+              echo "Default notification enabled, failing workflow."
               exit 1
             fi
           else
-            echo "No service issues detected."
+            if [ -f data/notify.txt ] && [ -s data/notify.txt ]; then
+              echo "Service issues detected:"
+              cat data/notify.txt
+              echo "Service issues have been reported through the configured notification channels."
+            else
+              echo "No service issues detected."
+            fi
           fi
